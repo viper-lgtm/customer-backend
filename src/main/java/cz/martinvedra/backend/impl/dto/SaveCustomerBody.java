@@ -8,5 +8,6 @@ public record SaveCustomerBody(
         String email,
         String phone,
         String username,
-        String password
+        String password,
+        String role
 ) {}

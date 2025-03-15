@@ -8,6 +8,7 @@ import cz.martinvedra.backend.impl.repo.CustomerRepository;
 import cz.martinvedra.backend.impl.service.mapper.CustomerMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,14 +19,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerMapper customerMapper;
     private final CustomerRepository customerRepository;
+    private final PasswordEncoder passwordEncoder;
 
 //    private final CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
     @Override
     public CustomerDto save(SaveCustomerBody customerBody) {
         CustomerEntity customerEntity = customerMapper.mapToCustomerEntity(customerBody);
-        CustomerEntity customerEntityEntitySaved = customerRepository.save(customerEntity);
-        CustomerDto customerDto = customerMapper.mapToCustomerDto(customerEntityEntitySaved);
+        CustomerEntity customerEntitySaved = customerRepository.save(customerEntity);
+        CustomerDto customerDto = customerMapper.mapToCustomerDto(customerEntitySaved);
         return customerDto;
     }
 
@@ -33,12 +35,13 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto login(LoginCustomerBody loginCustomerBody) {
         val username = loginCustomerBody.username();
         val password = loginCustomerBody.password();
+
         CustomerEntity customerEntity = customerRepository.findByUsername(username).orElse(null);
         if (customerEntity == null) {
             return null;
         }
 
-        if (password.equals(customerEntity.getPassword())) {
+        if (passwordEncoder.matches(password, customerEntity.getPassword())) {
             return customerMapper.mapToCustomerDto(customerEntity);
         }
         return null;
