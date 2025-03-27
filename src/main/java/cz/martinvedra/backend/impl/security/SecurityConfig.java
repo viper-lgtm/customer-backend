@@ -29,9 +29,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Opravený řádek
                 .authorizeHttpRequests((authz) -> authz.requestMatchers("/customer/save").permitAll())
                 .authorizeHttpRequests((authz) -> authz.requestMatchers(HttpMethod.OPTIONS, "/customer/login").permitAll())
-//                .authorizeHttpRequests((authz) -> authz.requestMatchers("/customer/login").permitAll())
                 .authorizeHttpRequests((authz) -> authz.requestMatchers("/customer/login").hasAuthority("USER"))
-//                .authorizeHttpRequests((authz) -> authz.requestMatchers("/customer").permitAll())
                 .authorizeHttpRequests((authz) -> authz.requestMatchers("/customer").hasAuthority("USER"))
                 .httpBasic(Customizer.withDefaults());
         return http.build();
