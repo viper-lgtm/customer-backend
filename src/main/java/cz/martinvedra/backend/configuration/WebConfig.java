@@ -12,9 +12,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // Apply to all endpoints under /api
 //                .allowedOrigins("*")
                 .allowedOrigins("http://localhost:3000", "https://martinvedra.cz")
-                .allowedMethods("*")
-                .allowedHeaders("*");
-//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                .allowedHeaders("Authorization", "Content-Type");
+//                .allowedMethods("*")
+//                .allowedHeaders("*");
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("Authorization", "Content-Type");
     }
 }
