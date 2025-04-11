@@ -26,6 +26,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto save(SaveCustomerBody customerBody) {
         CustomerEntity customerEntity = customerMapper.mapToCustomerEntity(customerBody);
+
+        String plainTextPassword = customerBody.password();
+        String hashedPassword = passwordEncoder.encode(plainTextPassword);
+        customerEntity.setPassword(hashedPassword);
+
         CustomerEntity customerEntitySaved = customerRepository.save(customerEntity);
         CustomerDto customerDto = customerMapper.mapToCustomerDto(customerEntitySaved);
         return customerDto;

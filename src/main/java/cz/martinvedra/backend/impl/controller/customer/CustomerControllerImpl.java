@@ -4,7 +4,6 @@ import cz.martinvedra.backend.impl.dto.CustomerDto;
 import cz.martinvedra.backend.impl.dto.LoginCustomerBody;
 import cz.martinvedra.backend.impl.dto.SaveCustomerBody;
 import cz.martinvedra.backend.impl.service.CustomerService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
